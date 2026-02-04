@@ -132,10 +132,30 @@ const ALPHABET_CONTENT = {
     ]
 };
 
-// Generate dynamic gradient colors for each letter (HSL-based)
-function getLetterGradient(letter) {
-    const index = letter.charCodeAt(0) - 65; // A=0, B=1, ...
-    const hue1 = (index * 15) % 360;
-    const hue2 = (hue1 + 60) % 360;
-    return `linear-gradient(135deg, hsl(${hue1}, 70%, 60%), hsl(${hue2}, 70%, 50%))`;
+const DIGIT_CONTENT = {
+    0: [{ word: 'Zero', emoji: '⭕' }],
+    1: [{ word: 'One', emoji: '🍎' }],
+    2: [{ word: 'Two', emoji: '⚽' }],
+    3: [{ word: 'Three', emoji: '⭐' }],
+    4: [{ word: 'Four', emoji: '🍀' }],
+    5: [{ word: 'Five', emoji: '🖐️' }],
+    6: [{ word: 'Six', emoji: '🦋' }],
+    7: [{ word: 'Seven', emoji: '🌈' }],
+    8: [{ word: 'Eight', emoji: '🍕' }],
+    9: [{ word: 'Nine', emoji: '🎈' }]
+};
+
+// Generate dynamic gradient colors for each character (HSL-based)
+function getLetterGradient(char) {
+    if (/[0-9]/.test(char)) {
+        const digit = parseInt(char);
+        const hue1 = (digit * 36 + 180) % 360; // Offset by 180 to distinguish from letters
+        const hue2 = (hue1 + 40) % 360;
+        return `linear-gradient(135deg, hsl(${hue1}, 70%, 60%), hsl(${hue2}, 70%, 50%))`;
+    } else {
+        const index = char.toUpperCase().charCodeAt(0) - 65; // A=0, B=1, ...
+        const hue1 = (index * 13) % 360;
+        const hue2 = (hue1 + 60) % 360;
+        return `linear-gradient(135deg, hsl(${hue1}, 70%, 60%), hsl(${hue2}, 70%, 50%))`;
+    }
 }

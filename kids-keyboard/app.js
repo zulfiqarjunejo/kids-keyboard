@@ -2,7 +2,7 @@
 const AppState = {
     audioElements: {},
     audioLoaded: 0,
-    totalAudio: 26,
+    totalAudio: 36,
     currentLetter: null,
     isFullscreen: false,
     isKeyboardActive: false,
@@ -95,7 +95,7 @@ const AuthManager = {
             event.preventDefault();
             this.handleTimeExpiredKey();
         };
-        
+
         document.addEventListener('keydown', this.timeExpiredKeyHandler, { once: true });
     },
 
@@ -321,40 +321,44 @@ function toggleTheme() {
 // Audio Loading
 function preloadAudio() {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const digits = '0123456789'.split('');
+    const allChars = [...letters, ...digits];
 
-    letters.forEach(letter => {
+    allChars.forEach(char => {
         const audio = new Audio();
         audio.preload = 'auto';
 
-        // For this demo, we'll use placeholder audio
-        // In production, replace with actual audio files
-        audio.src = `assets/audio/${letter}.wav`;
+        // All assets are .wav and lowercase
+        const fileName = char.toLowerCase();
+        audio.src = `assets/audio/${fileName}.wav`;
 
         audio.addEventListener('canplaythrough', () => {
+            // Use local variable to avoid race condition or undefined access
+            audio.loaded = true;
             AppState.audioLoaded++;
             updateLoadingProgress();
         });
 
         audio.addEventListener('error', (e) => {
-            console.error(`Failed to load audio for ${letter}:`, e);
+            console.error(`Failed to load audio for ${char}:`, e);
             AppState.audioLoaded++; // Count as loaded to prevent blocking
             updateLoadingProgress();
 
             if (AppState.audioLoaded === 1) {
                 // Show error on first failure
-                elements.loadingError.textContent = `Note: Audio files not found. The app will work without sound. Place audio files in assets/audio/ folder.`;
+                elements.loadingError.textContent = `Note: Some audio files not found. Place audio files in assets/audio/ folder.`;
                 elements.loadingError.classList.remove('hidden');
             }
         });
 
-        AppState.audioElements[letter] = audio;
+        AppState.audioElements[char] = audio;
     });
 }
 
 function updateLoadingProgress() {
     const progress = (AppState.audioLoaded / AppState.totalAudio) * 100;
     elements.progressFill.style.width = `${progress}%`;
-    elements.loadingStatus.textContent = `${AppState.audioLoaded} / ${AppState.totalAudio} letters loaded`;
+    elements.loadingStatus.textContent = `${AppState.audioLoaded} / ${AppState.totalAudio} items loaded`;
 
     if (AppState.audioLoaded === AppState.totalAudio) {
         setTimeout(() => {
@@ -381,8 +385,8 @@ function showLearningScreen() {
     elements.learningScreen.classList.remove('hidden');
     AppState.isKeyboardActive = true;
 
-    // Show initial letter
-    showLetter('A');
+    // Show initial content
+    showContent('A');
 }
 
 // Fullscreen Management
@@ -418,46 +422,72 @@ function exitFullscreen() {
     AppState.isExitAuthorized = true;
 }
 
-// Letter Display
-function showLetter(letter) {
-    AppState.currentLetter = letter;
+// Content Display (Letter or Digit)
+function showContent(item) {
+    AppState.currentLetter = item;
 
-    // Update letter display with animation
-    elements.letterMain.textContent = letter;
+    // Update display with animation
+    elements.letterMain.textContent = item;
     elements.letterMain.classList.remove('letter-bounce');
     void elements.letterMain.offsetWidth; // Trigger reflow
     elements.letterMain.classList.add('letter-bounce');
 
     // Update background gradient
-    document.body.style.background = getLetterGradient(letter);
+    document.body.style.background = getLetterGradient(item);
 
     // Display examples
-    displayExamples(letter);
+    displayExamples(item);
 
     // Play audio
-    playLetterAudio(letter);
+    playContentAudio(item);
 }
 
-function displayExamples(letter) {
-    const examples = ALPHABET_CONTENT[letter];
+function displayExamples(item) {
+    const isDigit = /[0-9]/.test(item);
+    const contentArr = isDigit ? DIGIT_CONTENT[item] : ALPHABET_CONTENT[item];
     elements.examplesContainer.innerHTML = '';
 
-    examples.forEach((example, index) => {
+    if (!contentArr) return;
+
+    contentArr.forEach((example, index) => {
         const exampleDiv = document.createElement('div');
         exampleDiv.className = 'example-item';
+        if (isDigit) exampleDiv.classList.add('digit-example');
         exampleDiv.style.animationDelay = `${index * 0.1}s`;
 
-        exampleDiv.innerHTML = `
-            <span class="example-emoji">${example.emoji}</span>
-            <span class="example-word">${letter} for ${example.word}</span>
-        `;
+        if (isDigit) {
+            const count = parseInt(item);
+            let emojisHTML = '';
+
+            if (count === 0) {
+                emojisHTML = `<span class="example-emoji">${example.emoji}</span>`;
+            } else {
+                emojisHTML = '<div class="emoji-grid">';
+                for (let i = 0; i < count; i++) {
+                    emojisHTML += `<span class="example-emoji-mini">${example.emoji}</span>`;
+                }
+                emojisHTML += '</div>';
+            }
+
+            exampleDiv.innerHTML = `
+                <div class="example-content">
+                    ${emojisHTML}
+                    <span class="example-word">${example.word}</span>
+                </div>
+            `;
+        } else {
+            exampleDiv.innerHTML = `
+                <span class="example-emoji">${example.emoji}</span>
+                <span class="example-word">${item} for ${example.word}</span>
+            `;
+        }
 
         elements.examplesContainer.appendChild(exampleDiv);
     });
 }
 
-function playLetterAudio(letter) {
-    const audio = AppState.audioElements[letter];
+function playContentAudio(char) {
+    const audio = AppState.audioElements[char];
 
     if (audio && audio.readyState >= 2) {
         // Stop any currently playing audio
@@ -468,7 +498,7 @@ function playLetterAudio(letter) {
             }
         });
 
-        // Play the letter's audio
+        // Play the audio
         audio.currentTime = 0;
         audio.play().catch(err => {
             console.error('Audio playback error:', err);
@@ -476,18 +506,25 @@ function playLetterAudio(letter) {
     }
 }
 
+// Helper to get a random character (A-Z or 0-9) excluding current if possible
+function getRandomChar() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const digits = '0123456789'.split('');
+    const all = [...letters, ...digits];
+
+    let random;
+    do {
+        random = all[Math.floor(Math.random() * all.length)];
+    } while (random === AppState.currentLetter && all.length > 1);
+
+    return random;
+}
+
 // Keyboard Event Handling
 function handleKeyPress(event) {
     // Global ESC handler for Fullscreen Exit Protection
-    // Must run BEFORE isKeyboardActive check to protect all screens. If in fullscreen, browser will exit. We catch that in fullscreenchange.
-    // If we are NOT in fullscreen (but should be), force modal.
     if (event.key === 'Escape') {
-        // If we are in fullscreen, browser will exit. We catch that in fullscreenchange.
-        // If we are NOT in fullscreen (but should be), force modal.
         if (AppState.isFullscreen) {
-            // Browser handles ESC by exiting fullscreen, triggering fullscreenchange
-            // We don't preventDefault here because browser native ESC is usually not prevent-able in fullscreen
-            // But we show modal just in case the browser DOESN'T exit (some kiosk modes)
             AuthManager.show();
         }
         return;
@@ -495,11 +532,23 @@ function handleKeyPress(event) {
 
     if (!AppState.isKeyboardActive) return;
 
-    // Check if it's a letter key
+    // Prevent default actions for all captured keys (scrolling, etc.)
+    event.preventDefault();
+
     const key = event.key.toUpperCase();
+
+    // Check if it's a letter
     if (/^[A-Z]$/.test(key)) {
-        event.preventDefault();
-        showLetter(key);
+        showContent(key);
+    }
+    // Check if it's a digit
+    else if (/^[0-9]$/.test(key)) {
+        showContent(key);
+    }
+    // Random fallback for any other key
+    else {
+        const randomChar = getRandomChar();
+        showContent(randomChar);
     }
 }
 

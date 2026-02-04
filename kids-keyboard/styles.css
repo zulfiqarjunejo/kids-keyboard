@@ -308,6 +308,23 @@ button:active {
     margin-bottom: 0.5rem;
 }
 
+.emoji-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    max-width: 250px;
+}
+
+.example-emoji-mini {
+    font-size: 2rem;
+}
+
+.digit-example {
+    min-width: 200px;
+}
+
 /* Modals */
 .modal {
     position: fixed;
@@ -506,17 +523,23 @@ a:focus {
     outline: 3px solid var(--color-secondary);
     outline-offset: 2px;
 }
+
 /* Timer Display in Modal */
 .timer-display {
     font-family: 'Fredoka One', cursive;
     font-size: 3rem;
     color: var(--primary-color);
     margin: 10px 0;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
     animation: pulse 1s infinite alternate;
 }
 
 @keyframes pulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
 }

@@ -1,4 +1,4 @@
-## ADDED Requirements
+## MODIFIED Requirements
 
 ### Requirement: Capture letter key press events
 The system SHALL capture keyboard events to trigger interactive audio-visual content. This includes specific handling for letters (A-Z), digits (0-9), and a random fallback for all other keys to ensure the application remains responsive to any interaction.
@@ -20,20 +20,3 @@ The system SHALL capture keyboard events to trigger interactive audio-visual con
 - **WHEN** user presses a key while its audio is still playing
 - **THEN** system SHALL restart the audio from the beginning
 - **THEN** system SHALL refresh the visual display
-
-### Requirement: Prevent default browser keyboard shortcuts
-The system SHALL prevent default browser keyboard behavior during active keyboard interaction mode.
-
-#### Scenario: Browser shortcuts disabled in active mode
-- **WHEN** keyboard interaction mode is active
-- **THEN** system SHALL prevent default browser actions for captured keys
-- **THEN** system SHALL prevent page scrolling from arrow/space keys
-- **THEN** system SHALL allow only the ESC key to trigger password modal (not exit fullscreen)
-
-### Requirement: Keyboard event handling across browsers
-The system SHALL handle keyboard events consistently across major browsers (Chrome, Firefox, Safari, Edge).
-
-#### Scenario: Cross-browser letter detection
-- **WHEN** user presses a letter key on any supported browser
-- **THEN** system SHALL correctly identify the letter regardless of browser implementation differences
-- **THEN** system SHALL handle both keydown and keypress events appropriately
