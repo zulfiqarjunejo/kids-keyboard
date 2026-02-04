@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive keyboard learning app for kids with alphabet sounds and visuals">
+    <title>ABC Keyboard Fun - Learn Letters!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Password Setup Modal -->
+    <div id="passwordSetupModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>👋 Welcome, Parent!</h2>
+            <p>Set a 4-digit PIN to protect the exit from fullscreen mode.</p>
+            <input type="password" id="setupPinInput" maxlength="4" placeholder="Enter 4-digit PIN" inputmode="numeric"
+                pattern="[0-9]*">
+            <button id="setupPinButton" class="btn-primary">Set PIN</button>
+            <p class="error-message hidden" id="setupError"></p>
+        </div>
+    </div>
+
+    <!-- Password Exit Modal -->
+    <div id="passwordExitModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🔒 Exit Fullscreen</h2>
+            <p>Enter your PIN to exit</p>
+            <p id="timerDisplay" class="timer-display">10</p>
+            <input type="password" id="exitPinInput" maxlength="4" placeholder="Enter PIN" inputmode="numeric"
+                pattern="[0-9]*">
+            <div class="modal-buttons">
+                <button id="exitPinSubmit" class="btn-primary">Submit</button>
+            </div>
+            <p class="error-message hidden" id="exitError"></p>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen">
+        <div class="loading-content">
+            <h1>🎵 Loading ABC Sounds...</h1>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p id="loadingStatus">0 / 26 letters loaded</p>
+            <p class="error-message hidden" id="loadingError"></p>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen hidden">
+        <button id="themeToggle" class="btn-icon" aria-label="Toggle Dark Mode">🌙</button>
+        <div class="welcome-content">
+            <h1>🎨 ABC Keyboard Fun!</h1>
+            <p class="subtitle">Press any letter key to learn the alphabet</p>
+            <button id="startButton" class="btn-large">🚀 Start Learning</button>
+            <button id="fullscreenButton" class="btn-secondary">⛶ Enter Fullscreen</button>
+            <div class="help-text">
+                <p><strong>Parents:</strong> Forgot your PIN? <a href="#" id="resetHelp">Click here for help</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Learning Interface -->
+    <div id="learningScreen" class="screen hidden">
+        <div class="letter-display">
+            <div id="letterBox" class="letter-box">
+                <div class="letter-main" id="letterMain">A</div>
+            </div>
+            <div id="examplesContainer" class="examples-container">
+                <!-- Examples will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>📖 Reset Your PIN</h2>
+            <p>If you've forgotten your PIN, you can reset it by:</p>
+            <ol>
+                <li>Open your browser's developer console (F12 or Cmd+Option+I)</li>
+                <li>Type: <code>localStorage.clear()</code></li>
+                <li>Press Enter</li>
+                <li>Refresh the page</li>
+            </ol>
+            <p>You'll be prompted to set a new PIN.</p>
+            <button id="closeHelpButton" class="btn-primary">Got it!</button>
+        </div>
+    </div>
+
+    <script src="alphabet-content.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
