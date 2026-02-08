@@ -191,7 +191,6 @@ const elements = {
 
     // Welcome
     startButton: null,
-    fullscreenButton: null,
     resetHelp: null,
     themeToggle: null,
 
@@ -233,8 +232,6 @@ function initDOMReferences() {
 
     // Welcome
     elements.startButton = document.getElementById('startButton');
-    elements.fullscreenButton = document.getElementById('fullscreenButton');
-    elements.fullscreenButton = document.getElementById('fullscreenButton');
     elements.resetHelp = document.getElementById('resetHelp');
     elements.themeToggle = document.getElementById('themeToggle');
 
@@ -577,10 +574,6 @@ function attachEventListeners() {
 
     // Welcome Screen
     elements.startButton.addEventListener('click', () => {
-        enterFullscreen();
-        showLearningScreen();
-    });
-    elements.fullscreenButton.addEventListener('click', () => {
         enterFullscreen();
         showLearningScreen();
     });
