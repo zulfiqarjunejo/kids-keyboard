@@ -576,7 +576,10 @@ function attachEventListeners() {
     });
 
     // Welcome Screen
-    elements.startButton.addEventListener('click', showLearningScreen);
+    elements.startButton.addEventListener('click', () => {
+        enterFullscreen();
+        showLearningScreen();
+    });
     elements.fullscreenButton.addEventListener('click', () => {
         enterFullscreen();
         showLearningScreen();
