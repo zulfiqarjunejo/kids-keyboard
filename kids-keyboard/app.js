@@ -62,6 +62,12 @@ const AuthManager = {
     timeExpiredKeyHandler: null,
 
     show() {
+        // Don't re-show if we're displaying the time expired message
+        const modalHeading = elements.passwordExitModal.querySelector('.modal-content h2');
+        if (modalHeading && modalHeading.textContent.includes('Time Expired')) {
+            return;
+        }
+
         elements.passwordExitModal.classList.remove('hidden');
         elements.exitPinInput.focus();
 
@@ -145,8 +151,10 @@ const AuthManager = {
         const hash = await hashPin(pin);
 
         if (hash === AppState.pinHash) {
-            // Authorized
+            // Authorized - set flag first to prevent fullscreenchange from interfering
+            AppState.isExitAuthorized = true;
             this.dismiss();
+            showWelcomeScreen();
             UI_Action.SET_FULLSCREEN(false);
         } else {
             // Shake animation
@@ -375,6 +383,7 @@ function updateLoadingProgress() {
 function showWelcomeScreen() {
     elements.welcomeScreen.classList.remove('hidden');
     elements.learningScreen.classList.add('hidden');
+    AppState.isKeyboardActive = false;
 }
 
 function showLearningScreen() {
@@ -519,6 +528,17 @@ function getRandomChar() {
 
 // Keyboard Event Handling
 function handleKeyPress(event) {
+    const exitModalVisible = elements.passwordExitModal && !elements.passwordExitModal.classList.contains('hidden');
+
+    if (exitModalVisible) {
+        if (elements.passwordExitModal.contains(event.target)) {
+            return;
+        }
+
+        event.preventDefault();
+        return;
+    }
+
     // Global ESC handler for Fullscreen Exit Protection
     if (event.key === 'Escape') {
         if (AppState.isFullscreen) {
@@ -613,8 +633,7 @@ function handleFullscreenChange() {
         // Unauthorized exit (e.g. ESC key)
         AuthManager.show();
     } else {
-        // Authorized exit - go to home screen
-        showWelcomeScreen();
+        // Authorized exit - already handled in verify(), just reset the flag
         AppState.isExitAuthorized = false;
     }
 }
