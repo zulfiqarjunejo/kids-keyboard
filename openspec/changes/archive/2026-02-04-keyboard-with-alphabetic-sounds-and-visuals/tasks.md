@@ -45,7 +45,7 @@
 - [x] 6.3 Implement vibrant gradient backgrounds (HSL-based, dynamic per letter)
 - [x] 6.4 Add bounce/scale animations on keystroke
 - [x] 6.5 Implement smooth transitions between letters
-- [x] 6.6 Import child-friendly Google Fonts (e.g., Fredoka One, Bubblegum Sans)
+- [x] 6.6 Import child-friendly Google Fonts (e.g., Fredoka One, Quicksand)
 - [x] 6.7 Ensure high contrast and readability
 
 ## 7. Password Setup & Storage

@@ -483,8 +483,10 @@ function displayExamples(item) {
             `;
         } else {
             exampleDiv.innerHTML = `
-                <span class="example-emoji">${example.emoji}</span>
-                <span class="example-word">${item} for ${example.word}</span>
+                <div class="example-content">
+                    <span class="example-word">${example.word}</span>
+                    <span class="example-emoji">${example.emoji}</span>
+                </div>
             `;
         }
 

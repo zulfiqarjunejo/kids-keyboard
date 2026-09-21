@@ -148,7 +148,7 @@ As we can not force the browser to stay in fullscreen mode, we will use the foll
 
 **Accessibility**:
 - High contrast text
-- Clear, readable fonts (e.g., 'Fredoka One', 'Bubblegum Sans' from Google Fonts)
+- Clear, readable fonts (e.g., 'Fredoka One', 'Quicksand' from Google Fonts)
 - Audio feedback for all interactions
 
 ## Risks / Trade-offs

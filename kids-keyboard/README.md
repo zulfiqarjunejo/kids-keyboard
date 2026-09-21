@@ -78,7 +78,7 @@ If you forget your PIN:
 
 ## 🎨 Design Highlights
 
-- **Fonts**: Fredoka One & Bubblegum Sans from Google Fonts
+- **Fonts**: Fredoka One & Quicksand from Google Fonts
 - **Colors**: HSL-based dynamic gradients (different for each letter)
 - **Animations**: Bounce, scale, and fade effects for engagement
 - **Responsive**: Adapts to different screen sizes
