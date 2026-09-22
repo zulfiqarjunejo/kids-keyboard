@@ -157,13 +157,13 @@ const AuthManager = {
             showWelcomeScreen();
             UI_Action.SET_FULLSCREEN(false);
         } else {
-            // Shake animation
+            elements.exitError.textContent = 'Incorrect password';
+            elements.exitError.classList.remove('hidden');
+            elements.exitPinInput.value = '';
             elements.passwordExitModal.querySelector('.modal-content').classList.add('shake');
             setTimeout(() => {
                 elements.passwordExitModal.querySelector('.modal-content').classList.remove('shake');
             }, 500);
-
-            // Re-enter (security measure)
             UI_Action.SET_FULLSCREEN(true);
         }
     }
