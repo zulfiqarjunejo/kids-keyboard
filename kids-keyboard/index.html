@@ -44,7 +44,7 @@
             <div class="progress-bar">
                 <div id="progressFill" class="progress-fill"></div>
             </div>
-            <p id="loadingStatus">0 / 26 letters loaded</p>
+            <p id="loadingStatus">0 / 88 items loaded</p>
             <p class="error-message hidden" id="loadingError"></p>
         </div>
     </div>
@@ -55,6 +55,10 @@
         <div class="welcome-content">
             <h1>🎨 ABC Keyboard Fun!</h1>
             <p class="subtitle">Press any letter key to learn the alphabet</p>
+            <details id="audioStatusMessage" class="audio-status" hidden>
+                <summary id="audioStatusSummary"></summary>
+                <p id="audioStatusDetails"></p>
+            </details>
             <button id="startButton" class="btn-large">🚀 Start Learning</button>
             <div class="help-text">
                 <p><strong>Parents:</strong> Forgot your PIN? <a href="#" id="resetHelp">Click here for help</a></p>
@@ -65,12 +69,17 @@
     <!-- Main Learning Interface -->
     <div id="learningScreen" class="screen hidden">
         <div class="letter-display">
-            <div id="letterBox" class="letter-box">
+            <div id="letterBox" class="letter-box letter-header">
                 <div class="letter-main" id="letterMain">A</div>
             </div>
-            <div id="examplesContainer" class="examples-container">
+            <div id="featuredExample" class="featured-example" hidden aria-live="polite">
+                <span id="exampleEmoji" class="featured-emoji" aria-hidden="true"></span>
+                <span id="exampleWord" class="featured-word"></span>
+            </div>
+            <div id="examplesContainer" class="examples-container" hidden>
                 <!-- Examples will be dynamically inserted here -->
             </div>
+            <p id="learningError" class="error-message learning-error" role="status" aria-live="polite" hidden></p>
         </div>
     </div>
 

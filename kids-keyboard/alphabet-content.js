@@ -1,136 +1,38 @@
-// Alphabet content mapping: letter -> examples with emoji
-const ALPHABET_CONTENT = {
-    A: [
-        { word: 'Apple', emoji: '🍎' },
-        { word: 'Airplane', emoji: '✈️' },
-        { word: 'Ant', emoji: '🐜' }
-    ],
-    B: [
-        { word: 'Ball', emoji: '⚽' },
-        { word: 'Balloon', emoji: '🎈' },
-        { word: 'Bear', emoji: '🐻' }
-    ],
-    C: [
-        { word: 'Cat', emoji: '🐱' },
-        { word: 'Car', emoji: '🚗' },
-        { word: 'Cake', emoji: '🍰' }
-    ],
-    D: [
-        { word: 'Dog', emoji: '🐕' },
-        { word: 'Dinosaur', emoji: '🦕' },
-        { word: 'Duck', emoji: '🦆' }
-    ],
-    E: [
-        { word: 'Elephant', emoji: '🐘' },
-        { word: 'Egg', emoji: '🥚' },
-        { word: 'Earth', emoji: '🌍' }
-    ],
-    F: [
-        { word: 'Fish', emoji: '🐠' },
-        { word: 'Flower', emoji: '🌸' },
-        { word: 'Frog', emoji: '🐸' }
-    ],
-    G: [
-        { word: 'Giraffe', emoji: '🦒' },
-        { word: 'Grapes', emoji: '🍇' },
-        { word: 'Guitar', emoji: '🎸' }
-    ],
-    H: [
-        { word: 'Horse', emoji: '🐴' },
-        { word: 'House', emoji: '🏠' },
-        { word: 'Heart', emoji: '❤️' }
-    ],
-    I: [
-        { word: 'Ice Cream', emoji: '🍦' },
-        { word: 'Island', emoji: '🏝️' },
-        { word: 'Iguana', emoji: '🦎' }
-    ],
-    J: [
-        { word: 'Jellyfish', emoji: '🪼' },
-        { word: 'Juice', emoji: '🧃' },
-        { word: 'Jet', emoji: '🛩️' }
-    ],
-    K: [
-        { word: 'Kite', emoji: '🪁' },
-        { word: 'Kangaroo', emoji: '🦘' },
-        { word: 'Key', emoji: '🔑' }
-    ],
-    L: [
-        { word: 'Lion', emoji: '🦁' },
-        { word: 'Lemon', emoji: '🍋' },
-        { word: 'Leaf', emoji: '🍃' }
-    ],
-    M: [
-        { word: 'Monkey', emoji: '🐵' },
-        { word: 'Moon', emoji: '🌙' },
-        { word: 'Mouse', emoji: '🐭' }
-    ],
-    N: [
-        { word: 'Nest', emoji: '🪺' },
-        { word: 'Notebook', emoji: '📓' },
-        { word: 'Nose', emoji: '👃' }
-    ],
-    O: [
-        { word: 'Octopus', emoji: '🐙' },
-        { word: 'Orange', emoji: '🍊' },
-        { word: 'Owl', emoji: '🦉' }
-    ],
-    P: [
-        { word: 'Penguin', emoji: '🐧' },
-        { word: 'Pizza', emoji: '🍕' },
-        { word: 'Panda', emoji: '🐼' }
-    ],
-    Q: [
-        { word: 'Queen', emoji: '👸' },
-        { word: 'Question', emoji: '❓' },
-        { word: 'Quilt', emoji: '🛏️' }
-    ],
-    R: [
-        { word: 'Rainbow', emoji: '🌈' },
-        { word: 'Rocket', emoji: '🚀' },
-        { word: 'Rabbit', emoji: '🐰' }
-    ],
-    S: [
-        { word: 'Sun', emoji: '☀️' },
-        { word: 'Snake', emoji: '🐍' },
-        { word: 'Star', emoji: '⭐' }
-    ],
-    T: [
-        { word: 'Tiger', emoji: '🐯' },
-        { word: 'Tree', emoji: '🌳' },
-        { word: 'Turtle', emoji: '🐢' }
-    ],
-    U: [
-        { word: 'Umbrella', emoji: '☂️' },
-        { word: 'Unicorn', emoji: '🦄' },
-        { word: 'UFO', emoji: '🛸' }
-    ],
-    V: [
-        { word: 'Violin', emoji: '🎻' },
-        { word: 'Volcano', emoji: '🌋' },
-        { word: 'Van', emoji: '🚐' }
-    ],
-    W: [
-        { word: 'Whale', emoji: '🐋' },
-        { word: 'Watermelon', emoji: '🍉' },
-        { word: 'Watch', emoji: '⌚' }
-    ],
-    X: [
-        { word: 'Xylophone', emoji: '🎹' },
-        { word: 'X-ray', emoji: '🩻' },
-        { word: 'Xbox', emoji: '🎮' }
-    ],
-    Y: [
-        { word: 'Yellow', emoji: '💛' },
-        { word: 'Yacht', emoji: '🛥️' },
-        { word: 'Yak', emoji: '🦬' }
-    ],
-    Z: [
-        { word: 'Zebra', emoji: '🦓' },
-        { word: 'Zoo', emoji: '🦁' },
-        { word: 'Zipper', emoji: '🤐' }
-    ]
-};
+// Alphabet content mapping: letter -> three spoken examples with scalable emoji.
+const ALPHABET_CONTENT = Object.fromEntries(Object.entries({
+    A: [['Apple', '🍎'], ['Ant', '🐜'], ['Alligator', '🐊']],
+    B: [['Ball', '⚽'], ['Banana', '🍌'], ['Bus', '🚌']],
+    C: [['Cat', '🐱'], ['Cow', '🐄'], ['Carrot', '🥕']],
+    D: [['Dog', '🐕'], ['Duck', '🦆'], ['Door', '🚪']],
+    E: [['Elephant', '🐘'], ['Egg', '🥚'], ['Eagle', '🦅']],
+    F: [['Finger', '☝️'], ['Frog', '🐸'], ['Fork', '🍴']],
+    G: [['Goat', '🐐'], ['Giraffe', '🦒'], ['Guitar', '🎸']],
+    H: [['Hat', '🎩'], ['House', '🏠'], ['Horse', '🐴']],
+    I: [['Igloo', '🛖'], ['Ink', '🖋️'], ['Insect', '🐞']],
+    J: [['Juice', '🧃'], ['Jam', '🍓'], ['Jug', '🏺']],
+    K: [['Kite', '🪁'], ['Kangaroo', '🦘'], ['King', '🤴']],
+    L: [['Lion', '🦁'], ['Leaf', '🍃'], ['Lemon', '🍋']],
+    M: [['Monkey', '🐒'], ['Moon', '🌙'], ['Milk', '🥛']],
+    N: [['Nest', '🪺'], ['Net', '🥅'], ['Nut', '🌰']],
+    O: [['Owl', '🦉'], ['Orange', '🍊'], ['Octopus', '🐙']],
+    P: [['Pig', '🐖'], ['Pizza', '🍕'], ['Pencil', '✏️']],
+    Q: [['Queen', '👸'], ['Quail', '🐦'], ['Quilt', '🛏️']],
+    R: [['Rabbit', '🐇'], ['Ring', '💍'], ['Rocket', '🚀']],
+    S: [['Sun', '☀️'], ['Star', '⭐'], ['Spoon', '🥄']],
+    T: [['Tiger', '🐅'], ['Tree', '🌳'], ['Train', '🚂']],
+    U: [['Umbrella', '☂️'], ['Umpire', '⚾'], ['Uncle', '👨']],
+    V: [['Van', '🚐'], ['Violin', '🎻'], ['Vase', '🏺']],
+    W: [['Water', '💧'], ['Window', '🪟'], ['Whale', '🐋']],
+    X: [['Xylophone', '🎹'], ['X-ray', '🩻'], ['Fox', '🦊']],
+    Y: [['Yo-yo', '🪀'], ['Yak', '🐂'], ['Yacht', '🛥️']],
+    Z: [['Zebra', '🦓'], ['Zipper', '🤐'], ['Zoo', '🦒']]
+}).map(([letter, examples]) => [
+    letter,
+    examples.map(([word, emoji]) => ({
+        word,
+        emoji
+    }))
+]));
 
 const DIGIT_CONTENT = {
     0: [{ word: 'Zero', emoji: '⭕' }],
@@ -154,8 +56,8 @@ function getLetterGradient(char) {
         return `linear-gradient(135deg, hsl(${hue1}, 70%, 60%), hsl(${hue2}, 70%, 50%))`;
     } else {
         const index = char.toUpperCase().charCodeAt(0) - 65; // A=0, B=1, ...
-        const hue1 = (index * 13) % 360;
-        const hue2 = (hue1 + 60) % 360;
+        const hue1 = (index * 47) % 360;
+        const hue2 = (hue1 + 85) % 360;
         return `linear-gradient(135deg, hsl(${hue1}, 70%, 60%), hsl(${hue2}, 70%, 50%))`;
     }
 }

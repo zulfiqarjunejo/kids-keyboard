@@ -1,0 +1,551 @@
+{
+  "version": 1,
+  "tracks": {
+    "A:apple": {
+      "file": "a-apple.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "A:ant": {
+      "file": "a-ant.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "A:alligator": {
+      "file": "a-alligator.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "B:ball": {
+      "file": "b-ball.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "B:banana": {
+      "file": "b-banana.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "B:bus": {
+      "file": "b-bus.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "C:cat": {
+      "file": "c-cat.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "C:cow": {
+      "file": "c-cow.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "D:dog": {
+      "file": "d-dog.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "D:duck": {
+      "file": "d-duck.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "D:door": {
+      "file": "d-door.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "E:elephant": {
+      "file": "e-elephant.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "E:egg": {
+      "file": "e-egg.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "F:frog": {
+      "file": "f-frog.wav",
+      "word_start_seconds": 0.9386666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "F:fork": {
+      "file": "f-fork.wav",
+      "word_start_seconds": 0.9386666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "G:goat": {
+      "file": "g-goat.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "G:guitar": {
+      "file": "g-guitar.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "H:hat": {
+      "file": "h-hat.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "H:house": {
+      "file": "h-house.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "H:horse": {
+      "file": "h-horse.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "I:igloo": {
+      "file": "i-igloo.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "I:ink": {
+      "file": "i-ink.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "I:insect": {
+      "file": "i-insect.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "J:juice": {
+      "file": "j-juice.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "J:jam": {
+      "file": "j-jam.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "J:jug": {
+      "file": "j-jug.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "K:kite": {
+      "file": "k-kite.wav",
+      "word_start_seconds": 0.9813333333333333,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "K:kangaroo": {
+      "file": "k-kangaroo.wav",
+      "word_start_seconds": 0.9813333333333333,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "K:king": {
+      "file": "k-king.wav",
+      "word_start_seconds": 0.9813333333333333,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "L:lion": {
+      "file": "l-lion.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "L:leaf": {
+      "file": "l-leaf.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "L:lemon": {
+      "file": "l-lemon.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "M:monkey": {
+      "file": "m-monkey.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "M:moon": {
+      "file": "m-moon.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "M:milk": {
+      "file": "m-milk.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "N:nest": {
+      "file": "n-nest.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "N:net": {
+      "file": "n-net.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "N:nut": {
+      "file": "n-nut.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "O:owl": {
+      "file": "o-owl.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "O:orange": {
+      "file": "o-orange.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "O:octopus": {
+      "file": "o-octopus.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "P:pig": {
+      "file": "p-pig.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "P:pizza": {
+      "file": "p-pizza.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "P:pencil": {
+      "file": "p-pencil.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Q:queen": {
+      "file": "q-queen.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Q:quail": {
+      "file": "q-quail.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Q:quilt": {
+      "file": "q-quilt.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "R:rabbit": {
+      "file": "r-rabbit.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "R:ring": {
+      "file": "r-ring.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "R:rocket": {
+      "file": "r-rocket.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "S:sun": {
+      "file": "s-sun.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "S:star": {
+      "file": "s-star.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "S:spoon": {
+      "file": "s-spoon.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "T:tiger": {
+      "file": "t-tiger.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "T:tree": {
+      "file": "t-tree.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "T:train": {
+      "file": "t-train.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "U:umbrella": {
+      "file": "u-umbrella.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "U:umpire": {
+      "file": "u-umpire.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "U:uncle": {
+      "file": "u-uncle.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "V:van": {
+      "file": "v-van.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "V:violin": {
+      "file": "v-violin.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "V:vase": {
+      "file": "v-vase.wav",
+      "word_start_seconds": 1.024,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "W:water": {
+      "file": "w-water.wav",
+      "word_start_seconds": 1.2373333333333334,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "W:window": {
+      "file": "w-window.wav",
+      "word_start_seconds": 1.2373333333333334,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "W:whale": {
+      "file": "w-whale.wav",
+      "word_start_seconds": 1.2373333333333334,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "X:xylophone": {
+      "file": "x-xylophone.wav",
+      "word_start_seconds": 1.0666666666666667,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "X:x-ray": {
+      "file": "x-x-ray.wav",
+      "word_start_seconds": 1.0666666666666667,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "X:fox": {
+      "file": "x-fox.wav",
+      "word_start_seconds": 1.0666666666666667,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Y:yo-yo": {
+      "file": "y-yo-yo.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Y:yak": {
+      "file": "y-yak.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Y:yacht": {
+      "file": "y-yacht.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Z:zebra": {
+      "file": "z-zebra.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Z:zipper": {
+      "file": "z-zipper.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "Z:zoo": {
+      "file": "z-zoo.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "C:carrot": {
+      "file": "c-carrot.wav",
+      "word_start_seconds": 1.0026666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "E:eagle": {
+      "file": "e-eagle.wav",
+      "word_start_seconds": 0.96,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "F:finger": {
+      "file": "f-finger.wav",
+      "word_start_seconds": 0.9386666666666666,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    },
+    "G:giraffe": {
+      "file": "g-giraffe.wav",
+      "word_start_seconds": 1.0453333333333332,
+      "sample_rate": 24000,
+      "voice": "af_heart",
+      "model": "kokoro-onnx"
+    }
+  }
+}

@@ -4,8 +4,8 @@ An engaging, educational web application for young children to learn alphabet re
 
 ## ✨ Features
 
-- 🎵 **Audio Learning**: Each letter key plays the corresponding letter sound
-- 🖼️ **Visual Examples**: 2-3 child-friendly examples with emoji for each letter (e.g., "D for Dog 🐕, Dinosaur 🦕, Duck 🦆")
+- 🎵 **Audio Learning**: Each letter key plays the letter, “for,” and one example word in a natural spoken sequence
+- 🔤 **Visual Examples**: One large, responsive emoji and word appear when the example is spoken; each letter cycles through three examples
 - 🎨 **Premium UI**: Vibrant gradients, smooth animations, and child-friendly design
 - 🖥️ **Fullscreen Mode**: One-click distraction-free fullscreen experience
 - 🔒 **Parental Controls**: Password-protected exit to keep kids engaged (ESC key requires 4-digit PIN)
@@ -16,13 +16,16 @@ An engaging, educational web application for young children to learn alphabet re
 
 ### For Parents
 
-1. **Open the app**: Simply open `index.html` in your web browser (Chrome, Firefox, Safari, or Edge)
+1. **Start a local web server** in the `kids-keyboard` directory:
+   ```sh
+   python3 -m http.server 8000
+   ```
 
-2. **First-time setup**: You'll be prompted to set a 4-digit PIN for fullscreen exit protection
+2. **Open the app** at `http://localhost:8000` in Chrome, Firefox, Safari, or Edge.
 
-3. **Start learning**: Click "🚀 Start Learning" or "⛶ Enter Fullscreen" button
+3. **First-time setup**: You'll be prompted to set a 4-digit PIN for fullscreen exit protection.
 
-4. **Let your child play**: They can press any letter key (A-Z) to see and hear the alphabet!
+4. **Start learning**: Click “🚀 Start Learning.” Press a letter key to hear and see one example.
 
 ### Fullscreen Mode
 
@@ -40,9 +43,8 @@ kids-keyboard/
 ├── alphabet-content.js     # Letter-to-example mappings
 ├── assets/
 │   └── audio/
-│       ├── A.mp3
-│       ├── B.mp3
-│       └── ... (all 26 letters)
+│       ├── 0.wav ... 9.wav # Digit sounds
+│       └── alphabet/       # Kokoro alphabet phrases and cue manifest
 └── README.md              # This file
 ```
 
@@ -63,12 +65,12 @@ If you forget your PIN:
 
 ## 🎯 How It Works
 
-1. **Audio Pre-loading**: All 26 letter sounds are pre-loaded when the app starts
+1. **Audio Pre-loading**: The 78 alphabet phrases and 10 digit sounds are pre-loaded when the app starts
 2. **Keyboard Detection**: The app listens for letter key presses (A-Z)
 3. **Instant Feedback**: Each keystroke triggers:
-   - Audio playback of the letter sound
-   - Large letter display with animation
-   - 2-3 visual examples with emoji
+   - Audio playback of the letter, “for,” and one example word
+   - Large letter display
+   - One matching example visual revealed at the spoken-word cue
    - Dynamic gradient background
 
 4. **Password Protection**: 
@@ -96,23 +98,38 @@ Tested and works on:
 
 ### Audio Files
 
-The app uses MP3 audio files for each letter. Current files are generated using macOS Text-to-Speech. For custom audio:
+Digit sounds remain in `assets/audio/`. Alphabet phrases are generated locally with Kokoro and stored in `assets/audio/alphabet/` alongside their example-word cue times in `manifest.json`.
 
-1. Place MP3 files in `assets/audio/` folder
-2. Name them: `A.mp3`, `B.mp3`, ... `Z.mp3`
-3. Use a clear, friendly voice suitable for children
+If the Kokoro model and voice files are not in the default cache directory, create a local `.env` file from the template and set their paths:
+
+```sh
+cp .env.example .env
+```
+
+Set `KOKORO_MODEL_PATH` and `KOKORO_VOICES_PATH` in `kids-keyboard/.env`. The default voice is `af_heart`; choose another installed Kokoro voice with `KOKORO_VOICE`. Install the generator dependencies and create a one-phrase preview with:
+
+```sh
+python3 -m pip install -r scripts/requirements.txt
+python3 scripts/generate_alphabet_audio.py --preview
+```
+
+To generate all 78 local Kokoro phrases, run:
+
+```sh
+python3 scripts/generate_alphabet_audio.py
+```
+
+The `.env` file is ignored by Git. The generator writes browser-compatible WAV tracks and can resume after interruption. No API key or network connection is required.
+
+The app reports missing phrase tracks rather than substituting unrelated audio. Digit sounds continue to work if alphabet tracks are unavailable.
 
 ### Customizing Examples
 
-Edit `alphabet-content.js` to change the example words and emoji for each letter:
+Edit `alphabet-content.js` to change the three example words and emoji for each letter. Regenerate phrase audio for any changed words:
 
 ```javascript
 const ALPHABET_CONTENT = {
-    A: [
-        { word: 'Apple', emoji: '🍎' },
-        { word: 'Airplane', emoji: '✈️' },
-        { word: 'Ant', emoji: '🐜' }
-    ],
+    A: [['Apple', '🍎'], ['Ant', '🐜'], ['Alligator', '🐊']],
     // ... modify as needed
 };
 ```

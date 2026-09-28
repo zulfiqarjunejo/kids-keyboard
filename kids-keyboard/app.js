@@ -2,8 +2,18 @@
 const AppState = {
     audioElements: {},
     audioLoaded: 0,
-    totalAudio: 36,
+    totalAudio: 10 + Object.values(ALPHABET_CONTENT).reduce(
+        (count, examples) => count + examples.length,
+        0
+    ),
+    audioStatus: {},
+    unavailableAudio: [],
+    exampleIndexes: {},
     currentLetter: null,
+    currentSelection: null,
+    currentAudio: null,
+    playbackId: 0,
+    revealTimer: null,
     isFullscreen: false,
     isKeyboardActive: false,
     pinHash: null,
@@ -185,6 +195,9 @@ const elements = {
     progressFill: null,
     loadingStatus: null,
     loadingError: null,
+    audioStatusMessage: null,
+    audioStatusSummary: null,
+    audioStatusDetails: null,
 
     // Setup
     setupPinInput: null,
@@ -205,6 +218,10 @@ const elements = {
     // Learning
     letterMain: null,
     examplesContainer: null,
+    featuredExample: null,
+    exampleEmoji: null,
+    exampleWord: null,
+    learningError: null,
 
     // Help
     closeHelpButton: null
@@ -226,6 +243,9 @@ function initDOMReferences() {
     elements.progressFill = document.getElementById('progressFill');
     elements.loadingStatus = document.getElementById('loadingStatus');
     elements.loadingError = document.getElementById('loadingError');
+    elements.audioStatusMessage = document.getElementById('audioStatusMessage');
+    elements.audioStatusSummary = document.getElementById('audioStatusSummary');
+    elements.audioStatusDetails = document.getElementById('audioStatusDetails');
 
     // Setup
     elements.setupPinInput = document.getElementById('setupPinInput');
@@ -246,6 +266,10 @@ function initDOMReferences() {
     // Learning
     elements.letterMain = document.getElementById('letterMain');
     elements.examplesContainer = document.getElementById('examplesContainer');
+    elements.featuredExample = document.getElementById('featuredExample');
+    elements.exampleEmoji = document.getElementById('exampleEmoji');
+    elements.exampleWord = document.getElementById('exampleWord');
+    elements.learningError = document.getElementById('learningError');
 
     // Help
     elements.closeHelpButton = document.getElementById('closeHelpButton');
@@ -325,38 +349,76 @@ function toggleTheme() {
 
 // Audio Loading
 function preloadAudio() {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const digits = '0123456789'.split('');
-    const allChars = [...letters, ...digits];
 
-    allChars.forEach(char => {
+    digits.forEach(char => {
         const audio = new Audio();
         audio.preload = 'auto';
-
-        // All assets are .wav and lowercase
-        const fileName = char.toLowerCase();
-        audio.src = `assets/audio/${fileName}.wav`;
-
-        audio.addEventListener('canplaythrough', () => {
-            // Use local variable to avoid race condition or undefined access
-            audio.loaded = true;
-            AppState.audioLoaded++;
-            updateLoadingProgress();
-        });
-
-        audio.addEventListener('error', (e) => {
-            console.error(`Failed to load audio for ${char}:`, e);
-            AppState.audioLoaded++; // Count as loaded to prevent blocking
-            updateLoadingProgress();
-
-            if (AppState.audioLoaded === 1) {
-                // Show error on first failure
-                elements.loadingError.textContent = `Note: Some audio files not found. Place audio files in assets/audio/ folder.`;
-                elements.loadingError.classList.remove('hidden');
-            }
-        });
-
+        audio.src = `assets/audio/${char}.wav`;
         AppState.audioElements[char] = audio;
+        watchAudioLoad(char, audio);
+    });
+
+    fetch('assets/audio/alphabet/manifest.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(manifest => preloadAlphabetAudio(manifest.tracks || {}))
+        .catch(() => {
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => {
+                ALPHABET_CONTENT[letter].forEach(example => {
+                    markAudioUnavailable(`${letter}:${getExampleId(example.word)}`);
+                });
+            });
+        });
+}
+
+function watchAudioLoad(key, audio) {
+    audio.addEventListener('canplaythrough', () => {
+        settleAudioLoad(key, true);
+    });
+    audio.addEventListener('error', () => {
+        settleAudioLoad(key, false);
+    });
+}
+
+function settleAudioLoad(key, loaded) {
+    if (Object.prototype.hasOwnProperty.call(AppState.audioStatus, key)) return;
+    AppState.audioStatus[key] = loaded;
+    if (!loaded) AppState.unavailableAudio.push(key);
+    AppState.audioLoaded++;
+    updateLoadingProgress();
+}
+
+function markAudioUnavailable(key) {
+    if (Object.prototype.hasOwnProperty.call(AppState.audioStatus, key)) return;
+    AppState.audioStatus[key] = false;
+    AppState.unavailableAudio.push(key);
+    AppState.audioLoaded++;
+    updateLoadingProgress();
+}
+
+function preloadAlphabetAudio(tracks) {
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => {
+        ALPHABET_CONTENT[letter].forEach(example => {
+            const key = `${letter}:${getExampleId(example.word)}`;
+            const track = tracks[key];
+            if (!track || typeof track.file !== 'string' ||
+                !Number.isFinite(track.word_start_seconds) || track.word_start_seconds < 0) {
+                markAudioUnavailable(key);
+                return;
+            }
+
+            const audio = new Audio();
+            audio.preload = 'auto';
+            audio.src = `assets/audio/alphabet/${track.file}`;
+            audio.wordStartSeconds = track.word_start_seconds;
+            AppState.audioElements[key] = audio;
+            watchAudioLoad(key, audio);
+        });
     });
 }
 
@@ -364,6 +426,20 @@ function updateLoadingProgress() {
     const progress = (AppState.audioLoaded / AppState.totalAudio) * 100;
     elements.progressFill.style.width = `${progress}%`;
     elements.loadingStatus.textContent = `${AppState.audioLoaded} / ${AppState.totalAudio} items loaded`;
+
+    if (AppState.unavailableAudio.length) {
+        const unavailable = AppState.unavailableAudio.map(key => {
+            const [letter, exampleId] = key.split(':');
+            if (!exampleId) return `${letter} sound`;
+            const example = ALPHABET_CONTENT[letter].find(item => getExampleId(item.word) === exampleId);
+            return `${letter}: ${example ? example.word : exampleId}`;
+        });
+        elements.loadingError.textContent = `${unavailable.length} audio tracks are unavailable. See the welcome screen for details.`;
+        elements.loadingError.classList.remove('hidden');
+        elements.audioStatusSummary.textContent = `${unavailable.length} audio tracks are unavailable`;
+        elements.audioStatusDetails.textContent = unavailable.join(', ');
+        elements.audioStatusMessage.hidden = false;
+    }
 
     if (AppState.audioLoaded === AppState.totalAudio) {
         setTimeout(() => {
@@ -381,6 +457,7 @@ function updateLoadingProgress() {
 
 // Screen Management
 function showWelcomeScreen() {
+    stopCurrentAudio();
     elements.welcomeScreen.classList.remove('hidden');
     elements.learningScreen.classList.add('hidden');
     AppState.isKeyboardActive = false;
@@ -430,6 +507,7 @@ function exitFullscreen() {
 
 // Content Display (Letter or Digit)
 function showContent(item) {
+    stopCurrentAudio();
     AppState.currentLetter = item;
 
     // Update display with animation
@@ -441,10 +519,29 @@ function showContent(item) {
     // Update background gradient
     document.body.style.background = getLetterGradient(item);
 
-    // Display examples
-    displayExamples(item);
+    const isLetter = /^[A-Z]$/i.test(item);
+    elements.learningError.hidden = true;
+    elements.learningError.textContent = '';
 
-    // Play audio
+    if (isLetter) {
+        const letter = item.toUpperCase();
+        const examples = ALPHABET_CONTENT[letter];
+        const exampleIndex = AppState.exampleIndexes[letter] || 0;
+        const example = examples[exampleIndex];
+        AppState.exampleIndexes[letter] = (exampleIndex + 1) % examples.length;
+        AppState.currentSelection = { letter, example };
+        elements.examplesContainer.hidden = true;
+        elements.featuredExample.hidden = true;
+        elements.exampleEmoji.textContent = '';
+        elements.exampleWord.textContent = '';
+        playAlphabetSequence(AppState.currentSelection);
+        return;
+    }
+
+    AppState.currentSelection = null;
+    elements.featuredExample.hidden = true;
+    elements.examplesContainer.hidden = false;
+    displayExamples(item);
     playContentAudio(item);
 }
 
@@ -497,21 +594,65 @@ function displayExamples(item) {
 function playContentAudio(char) {
     const audio = AppState.audioElements[char];
 
-    if (audio && audio.readyState >= 2) {
-        // Stop any currently playing audio
-        Object.values(AppState.audioElements).forEach(a => {
-            if (!a.paused) {
-                a.pause();
-                a.currentTime = 0;
-            }
-        });
+    if (!audio || audio.readyState < 2) return;
+    AppState.currentAudio = audio;
+    audio.currentTime = 0;
+    audio.play().catch(() => showLearningAudioError(`${char} sound could not be played.`));
+}
 
-        // Play the audio
-        audio.currentTime = 0;
-        audio.play().catch(err => {
-            console.error('Audio playback error:', err);
-        });
+function getExampleId(word) {
+    return word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function stopCurrentAudio() {
+    AppState.playbackId++;
+    if (AppState.revealTimer !== null) {
+        clearTimeout(AppState.revealTimer);
+        AppState.revealTimer = null;
     }
+    if (AppState.currentAudio) {
+        AppState.currentAudio.pause();
+        AppState.currentAudio.currentTime = 0;
+        AppState.currentAudio = null;
+    }
+}
+
+function showLearningAudioError(message) {
+    elements.learningError.textContent = message;
+    elements.learningError.hidden = false;
+}
+
+function revealCurrentExample(playbackId, selection) {
+    if (playbackId !== AppState.playbackId || selection !== AppState.currentSelection) return;
+    elements.exampleEmoji.textContent = selection.example.emoji;
+    elements.exampleWord.textContent = selection.example.word;
+    elements.featuredExample.hidden = false;
+}
+
+function playAlphabetSequence(selection = AppState.currentSelection) {
+    if (!selection) return;
+    stopCurrentAudio();
+    const playbackId = AppState.playbackId;
+    const trackKey = `${selection.letter}:${getExampleId(selection.example.word)}`;
+    const audio = AppState.audioElements[trackKey];
+    if (!audio || audio.readyState < 2) {
+        showLearningAudioError(`${selection.letter} for ${selection.example.word} sound is unavailable.`);
+        return;
+    }
+
+    AppState.currentAudio = audio;
+    audio.currentTime = 0;
+    AppState.revealTimer = setTimeout(
+        () => revealCurrentExample(playbackId, selection),
+        audio.wordStartSeconds * 1000
+    );
+    audio.play().catch(() => {
+        if (playbackId === AppState.playbackId) {
+            if (AppState.revealTimer !== null) clearTimeout(AppState.revealTimer);
+            AppState.revealTimer = null;
+            showLearningAudioError(`${selection.letter} for ${selection.example.word} sound could not be played.`);
+        }
+    });
 }
 
 // Helper to get a random character (A-Z or 0-9) excluding current if possible
@@ -607,7 +748,6 @@ function attachEventListeners() {
 
     // Help Modal
     elements.closeHelpButton.addEventListener('click', hideHelpModal);
-
     // Keyboard Events
     document.addEventListener('keydown', handleKeyPress);
 
